@@ -15,7 +15,7 @@ const Navigation = ({status}) => {
         
         {
             name: "Balance",
-            path: "/user/balance"
+            path: "/user"
         },
         {
             name: "Deposite",
@@ -43,7 +43,7 @@ const Navigation = ({status}) => {
         },
     ]
   return (
-    <div className='sticky h-screen bg-[#3F4D67] text-white'>
+    <div className='sticky top-0 h-screen bg-[#3F4D67] text-white'>
         <div className='p-4 flex items-center justify-center border-b border-slate-500'>
             <h1 className='text-3xl font-bold'>{status} </h1>
         </div>

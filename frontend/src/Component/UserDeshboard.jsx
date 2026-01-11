@@ -10,7 +10,7 @@ const UserDeshboard = () => {
     <div className='grid grid-cols-[1fr_5fr]'>
         <Navigation status='user'/>
         <Routes>
-          <Route path='/user/balance' element={<UserBalance/>}></Route>
+          <Route path='/user' element={<UserBalance/>}></Route>
           <Route path='/user/deposit' element={<UserDeposit/>}></Route>
           <Route path='/user/withdraw' element={<UserWithdraw/>}></Route>
           <Route path='/user/details' element={<UserControll/>}></Route>

@@ -21,7 +21,7 @@ app.get("/", async (req, res) => {
 });
 
 
-
+//user account create
 app.post("/register", async (req, res) => {
     try{
         const { name, email, password } = req.body;
@@ -47,20 +47,29 @@ app.post("/register", async (req, res) => {
             to: email,
             subject: "Registration",
             text: "Registration successful",
-            html: `<h1>Hi ${user.name}</h1>
-            <p>your account has been created successfully</p>
-            <p>login now</p>
-            <a href="http://localhost:3000/login">Login</a>
+            html: `<h1>Hi ${name},</h1>
+            <p>Your account has been created successfully</p>
+            <p>Login now</p>
+            <a href=${process.env.HOST_LINK}>Login</a>
             <div>Your email is: ${email}</div>
             <div>Your password is: ${password}</div>`
         })
+        //create balance table
+        const [balance] = await db.execute(`CREATE TABLE IF NOT EXISTS balance (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255) NOT NULL UNIQUE, balance DECIMAL(10,2) DEFAULT 0.00)`);
+        if(!balance){
+            return res.status(400).json({ message: "Balance table not created"});
+        }
+        const [balanceInsert] = await db.execute(`INSERT INTO balance (email, balance) VALUES (?, ?)`, [email, 0.00]);
+        if(!balanceInsert){
+            return res.status(400).json({ message: "Balance not created"});
+        }
         res.status(201).json({ message: "User created successfully", user});
     }catch(e){
         console.log(e);
     }
 });
 
-
+// admin account create 
 app.post("/register-admin", async (req, res) => {
     try{
         const { name, email, password } = req.body;

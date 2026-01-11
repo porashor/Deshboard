@@ -35,8 +35,8 @@ const DepositeReqData = () => {
                             <div>{formatDistanceToNow(new Date(item.date))}</div>
                         </div>
                         <div className={`w-full py-2 flex items-center justify-evenly ${index === open ? "block" : "hidden"}`}>
-                            <button onClick={() => SuccessOrCencel(item.sendAmount, "success", item.transectionId)} className='bg-green-700 py-2 px-5 rounded-md text-xl text-white hover:bg-green-800'>Success</button>
-                            <button onClick={() => SuccessOrCencel(item.sendAmount, "cencel", item.transectionId)} className='bg-red-700 py-2 px-5 rounded-md text-xl text-white hover:bg-red-800'>Cancel</button>
+                            <button onClick={() => SuccessOrCencel(item.sendAmount, "success", item.transectionId, item.email)} className='bg-green-700 py-2 px-5 rounded-md text-xl text-white hover:bg-green-800'>Success</button>
+                            <button onClick={() => SuccessOrCencel(item.sendAmount, "cencel", item.transectionId, item.email)} className='bg-red-700 py-2 px-5 rounded-md text-xl text-white hover:bg-red-800'>Cancel</button>
                         </div>
                     </div>
                 ))}

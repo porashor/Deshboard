@@ -1,0 +1,47 @@
+import React, { useEffect, useState } from 'react'
+import { transectionUpdateHandles } from '../lib/AdminTransection'
+import {  formatDistanceToNow } from 'date-fns'
+
+const WithdrawReqData = () => {
+    const [open, setOpen] = useState(0)
+    const { allwithdraw, getWithdraws, WithdrawSuccessOrCencel } = transectionUpdateHandles()
+    useEffect(() => {
+        getWithdraws()
+    }, [])
+    const allPending = allwithdraw.filter(item => item.status === "pending")
+    console.log(allwithdraw)
+  return (
+    <div>
+        {/* <h1 className='text-2xl font-bold pt-10 pb-5 uppercase text-slate-800 border-b border-slate-300'>Withdraw Request ({allPending.length}) </h1> */}
+        <div>
+            {/* table header  */}
+            <div className='w-full grid grid-cols-[1fr_1fr_2fr_2fr_2fr] py-2 border-y border-slate-400 font-bold bg-slate-200 text-center'>
+                <div>Name</div>
+                <div>Email</div>
+                <div>Amount</div>
+                <div>status</div>
+                <div>date</div>
+            </div>
+            <div>
+                {allPending && allPending?.map((item, index) => (
+                    <div onClick={()=>setOpen(index)} key={index}>
+                        <div className='w-full grid grid-cols-[1fr_1fr_2fr_2fr_2fr] py-2 border-y border-slate-400 text-center'>
+                            <div>{item.name}</div>
+                            <div>{item.email}</div>
+                            <div>{item.sendAmount}</div>
+                            <div>{item.status}</div>
+                            <div>{formatDistanceToNow(new Date(item.date))}</div>
+                        </div>
+                        <div className={`w-full py-2 flex items-center justify-evenly ${index === open ? "block" : "hidden"}`}>
+                            <button onClick={() => WithdrawSuccessOrCencel(item.sendAmount, "success", item.email, item.id)} className='bg-green-700 py-2 px-5 rounded-md text-xl text-white hover:bg-green-800'>Success</button>
+                            <button onClick={() => WithdrawSuccessOrCencel(item.sendAmount, "cencel", item.email, item.id)} className='bg-red-700 py-2 px-5 rounded-md text-xl text-white hover:bg-red-800'>Cancel</button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default WithdrawReqData

@@ -59,7 +59,7 @@ export const userHandle = create((set) => ({
             const data = await login.json();
             set({status: data.status})
             toast.success(data.message);
-            window.location.href = "/";
+            window.location.href = "/user";
         } catch (error) {
             console.log(error)
         }finally {
@@ -97,5 +97,24 @@ export const userHandle = create((set) => ({
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+    balance: {},
+    getBalance: async ()=>{
+        try {
+            const getBalance = await fetch( import.meta.env.VITE_API_LINK +'/deposite/user-balance', {
+                credentials: "include"
+            });
+            const data = await getBalance.json();
+            set({balance: data})
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    getNum: (objects, text)=>{
+        console.log(objects)
+    const objectss = objects?.filter((item) => item.status === text);
+    const getNumValue = objectss.map((item) => Number(item.sendAmount));
+    const total = getNumValue.reduce((a, b) => a + b, 0);
+    return total.toFixed(2)
+  }
 }))
